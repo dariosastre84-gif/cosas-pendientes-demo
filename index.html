@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'self'; connect-src 'none'">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153a32">
+  <title>Cosas pendientes</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header><div class="wrap bar"><a href="./" class="brand"><span>✓</span> Cosas pendientes</a>
+  <nav hidden id="nav" aria-label="Menú"><button id="install" hidden>Instalar</button><button id="admin" hidden>Administración</button><button id="logout">Salir</button></nav></div></header>
+  <main class="wrap">
+    <p id="notice" role="status" aria-live="polite"></p>
+    <section id="auth" hidden>
+      <h1>Tu agenda</h1>
+      <p>Registrá problemas, organizá el seguimiento y verificá qué se resolvió.</p>
+      <form id="access" class="panel">
+        <h2 id="access-title">Ingresá a tu cuenta</h2>
+        <label id="name-field" hidden>Nombre<input name="name" maxlength="80" autocomplete="name"></label>
+        <label>Correo<input name="email" type="email" required autocomplete="email"></label>
+        <label>Contraseña<input name="password" type="password" minlength="10" maxlength="128" required autocomplete="current-password"></label>
+        <button class="primary" id="access-submit">Ingresar</button>
+        <button type="button" id="switch-auth">Crear cuenta</button>
+        <p class="muted" id="preview-notice">Vista previa local. Usá datos ficticios y una contraseña exclusiva para esta prueba.</p>
+      </form>
+    </section>
+    <section id="workspace" hidden>
+      <p id="demo-notice" class="panel method" hidden>Demo de prueba. Usá datos ficticios. Tus pendientes se guardan únicamente en este navegador.</p>
+      <div class="heading"><div><p id="welcome" class="muted"></p><h1>Agenda</h1></div><div class="actions"><button id="add">Carga directa</button><button class="primary" id="guided">+ Nuevo pendiente</button></div></div>
+      <details class="panel method">
+        <summary>Cómo organizar un pendiente</summary>
+        <ol>
+          <li><strong>Registrá lo que pasa.</strong> Describí un hecho concreto.</li>
+          <li><strong>Elegí una acción.</strong> Empezá por algo que puedas hacer o asignar.</li>
+          <li><strong>Reservá un momento.</strong> Poné una fecha para revisar cómo va.</li>
+          <li><strong>Comprobá el resultado.</strong> Guardá evidencia o ajustá el plan.</li>
+        </ol>
+      </details>
+      <div class="metrics" id="metrics"></div>
+      <div class="filters">
+        <label>Buscar<input id="search" type="search" placeholder="Registro, título o responsable"></label>
+        <label>Estado<select id="state-filter"><option value="">Todos</option></select></label>
+        <label>Categoría<select id="category-filter"><option value="">Todas</option></select></label>
+        <label>Fecha<select id="due-filter"><option value="">Todas</option><option value="late">Vencidas</option><option value="today">Hoy</option><option value="future">Próximas</option><option value="none">Sin fecha</option></select></label>
+      </div>
+      <div id="items"></div>
+      <button id="sample">Cargar un caso ficticio</button>
+    </section>
+  </main>
+  <dialog id="editor">
+    <form id="record">
+      <div class="heading"><h2 id="record-title">Nuevo pendiente</h2><button type="button" data-close="editor" aria-label="Cerrar">✕</button></div>
+      <p id="guide-status" class="muted" role="status" hidden></p>
+      <div class="form-group" data-step="0">
+      <label>Título<input name="title" required maxlength="140" placeholder="Ej. Organizar las compras del hogar"></label>
+      <label>Descripción<textarea name="description" required maxlength="4000" rows="3"></textarea></label>
+      <div><button type="button" id="voice">Dictar descripción</button><p id="voice-status" class="muted" role="status"></p></div>
+      </div>
+      <div class="form-group" data-step="1">
+      <div class="fields">
+        <label>Categoría<select name="category"></select></label>
+        <label>Prioridad<select name="priority"></select></label>
+        <label>Estado<select name="state"></select></label>
+        <label>Responsable<input name="responsible" maxlength="120"></label>
+      </div>
+      <label>Posibles causas<textarea name="causes" maxlength="3000"></textarea></label>
+      <label>Solución propuesta<textarea name="solution" maxlength="3000"></textarea></label>
+      </div>
+      <div class="form-group" data-step="2">
+      <label>Fecha de seguimiento<input name="due" type="date"></label>
+      <div id="reschedule" hidden>
+        <button type="button" id="suggest">Sugerir próxima fecha</button><p class="muted" id="suggestion" role="status"></p>
+        <label>Motivo del cambio de fecha<input name="reason" maxlength="500"></label>
+      </div>
+      <label>Criterio de cierre<textarea name="criterion" maxlength="2000"></textarea></label>
+      <label>Evidencia de cumplimiento<textarea name="evidence" maxlength="3000"></textarea></label>
+      </div>
+      <p id="record-error" role="alert"></p>
+      <div class="actions">
+        <button type="button" id="guide-back" hidden>Anterior</button>
+        <button type="button" id="guide-next" class="primary" hidden>Continuar</button>
+        <button class="primary" id="save-record">Guardar pendiente</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog id="detail">
+    <div class="heading"><h2 id="detail-title"></h2><button type="button" data-close="detail" aria-label="Cerrar">✕</button></div>
+    <div id="detail-body"></div>
+  </dialog>
+</body>
+</html>
