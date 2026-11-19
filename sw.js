@@ -1,6 +1,6 @@
 const scope = self.registration.scope;
 const cachePrefix = 'cp-shell-' + new URL(scope).pathname + '-';
-const cacheName = cachePrefix + 'v3';
+const cacheName = cachePrefix + 'v4';
 const assets = ['./', 'app.js', 'style.css', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png']
   .map(path => new URL(path, scope).href);
 self.addEventListener('install', event => {
